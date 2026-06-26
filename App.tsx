@@ -149,10 +149,10 @@ function AppContent() {
     setToast(prev => ({ ...prev, isVisible: false }));
   };
 
-  // Show username modal if not authenticated and not loading
+  // Auth bypass: auto-creates default user, no modal needed
   useEffect(() => {
     if (!authLoading && !isAuthenticated) {
-      setShowUsernameModal(true);
+      // Auto-user creation handled in AuthContext
     }
   }, [authLoading, isAuthenticated]);
 
@@ -769,7 +769,6 @@ function AppContent() {
   // Handlers
   const handleGenerate = async (params: GenerationParams) => {
     if (!isAuthenticated || !token) {
-      setShowUsernameModal(true);
       return;
     }
 

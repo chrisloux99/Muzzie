@@ -14,8 +14,8 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const TOKEN_KEY = 'acestep_token';
-const USER_KEY = 'acestep_user';
+const TOKEN_KEY = 'muzzie_token';
+const USER_KEY = 'muzzie_user';
 
 export function AuthProvider({ children }: { children: ReactNode }): React.ReactElement {
   // Start with null - we'll auto-login from database on mount
@@ -36,20 +36,30 @@ export function AuthProvider({ children }: { children: ReactNode }): React.React
         localStorage.setItem(TOKEN_KEY, newToken);
         localStorage.setItem(USER_KEY, JSON.stringify(userData));
       } catch (error: unknown) {
-        // No user in database (404) or server error - that's okay
-        // Clear any stale localStorage data
         const err = error as { message?: string };
         if (err.message?.startsWith('404:')) {
-          // No user exists yet - frontend will show username setup
-          console.log('No user in database, need to set up username');
+          // No user exists yet - auto-create default user
+          console.log('No user in database, auto-creating default user...');
+          try {
+            const { user: userData, token: newToken } = await authApi.setup('MuzzieUser');
+            setUser(userData);
+            setToken(newToken);
+            localStorage.setItem(TOKEN_KEY, newToken);
+            localStorage.setItem(USER_KEY, JSON.stringify(userData));
+          } catch (setupErr) {
+            console.error('Failed to auto-create user:', setupErr);
+            setToken(null);
+            setUser(null);
+            localStorage.removeItem(TOKEN_KEY);
+            localStorage.removeItem(USER_KEY);
+          }
         } else {
           console.warn('Auto-login failed:', error);
+          setToken(null);
+          setUser(null);
+          localStorage.removeItem(TOKEN_KEY);
+          localStorage.removeItem(USER_KEY);
         }
-        // Clear stale data
-        setToken(null);
-        setUser(null);
-        localStorage.removeItem(TOKEN_KEY);
-        localStorage.removeItem(USER_KEY);
       } finally {
         setIsLoading(false);
       }
