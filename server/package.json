@@ -1,5 +1,5 @@
 {
-  "name": "ace-step-ui-server",
+  "name": "muzzie-server",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
@@ -20,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
     "node-cron": "^4.2.1",
+    "sql.js": "^1.14.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="https://img.shields.io/badge/🎵-ACE--Step_UI-ff69b4?style=for-the-badge&labelColor=1a1a1a" alt="ACE-Step UI" height="60">
+  <img src="https://img.shields.io/badge/🎵-Muzzie-d4760a?style=for-the-badge&labelColor=0c1a10" alt="Muzzie" height="60">
 </p>
 
-<h1 align="center">ACE-Step UI</h1>
+<h1 align="center">Muzzie</h1>
 
 <p align="center">
-  <strong>The Ultimate Open Source Suno Alternative</strong><br>
+  <strong>AI Music Generator with Zambian Heritage Aesthetics</strong><br>
   <em>Seamless integration with <a href="https://github.com/ace-step/ACE-Step-1.5">ACE-Step 1.5</a> - The Open Source AI Music Generation Model</em>
 </p>
 
@@ -20,7 +20,7 @@
 
 <p align="center">
   <a href="#-demo">Demo</a> •
-  <a href="#-why-ace-step-ui">Why ACE-Step</a> •
+  <a href="#-why-muzzie">Why Muzzie</a> •
   <a href="#-features">Features</a> •
   <a href="#-installation">Installation</a> •
   <a href="#-usage">Usage</a> •
@@ -33,7 +33,7 @@
   <img src="https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?style=flat-square&logo=tailwindcss" alt="TailwindCSS">
   <img src="https://img.shields.io/badge/SQLite-Local_First-003B57?style=flat-square&logo=sqlite" alt="SQLite">
   <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square" alt="License">
-  <img src="https://img.shields.io/github/stars/fspecii/ace-step-ui?style=flat-square" alt="Stars">
+  <img src="https://img.shields.io/github/stars/chrisloux99/Muzzie?style=flat-square" alt="Stars">
 </p>
 
 ---
@@ -47,7 +47,7 @@
 </p>
 
 <p align="center">
-  <img src="docs/demo.gif" alt="ACE-Step UI - Open Source Suno Alternative" width="100%">
+  <img src="docs/demo.gif" alt="Muzzie - AI Music Generator" width="100%">
 </p>
 
 <p align="center">

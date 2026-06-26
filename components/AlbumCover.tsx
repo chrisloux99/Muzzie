@@ -43,38 +43,38 @@ class SeededRandom {
   }
 }
 
-// Curated color palettes - music-themed combinations
+// Curated color palettes - Zambian cultural heritage inspired
 const palettes = [
-  // Sunset Vibes
-  { colors: ['#FF6B6B', '#FEC89A', '#FFD93D', '#C9184A'], bg: '#1a1a2e' },
-  // Ocean Depths
-  { colors: ['#0077B6', '#00B4D8', '#90E0EF', '#CAF0F8'], bg: '#03045E' },
-  // Forest Night
-  { colors: ['#2D6A4F', '#40916C', '#52B788', '#95D5B2'], bg: '#1B4332' },
-  // Neon Dreams
-  { colors: ['#F72585', '#7209B7', '#3A0CA3', '#4CC9F0'], bg: '#10002B' },
-  // Golden Hour
-  { colors: ['#FF9500', '#FF5400', '#FFBD00', '#FFE066'], bg: '#2D1B00' },
-  // Arctic Aurora
-  { colors: ['#48CAE4', '#00F5D4', '#9B5DE5', '#F15BB5'], bg: '#0A0A1A' },
-  // Lavender Haze
-  { colors: ['#E0AAFF', '#C77DFF', '#9D4EDD', '#7B2CBF'], bg: '#240046' },
-  // Cherry Blossom
-  { colors: ['#FFCCD5', '#FFB3C1', '#FF758F', '#C9184A'], bg: '#2B0A14' },
-  // Cyber Punk
-  { colors: ['#00FF87', '#60EFFF', '#FF00E5', '#FFE500'], bg: '#0D0D0D' },
-  // Deep Space
-  { colors: ['#7400B8', '#5E60CE', '#4EA8DE', '#56CFE1'], bg: '#03071E' },
-  // Warm Ember
-  { colors: ['#FFBA08', '#FAA307', '#F48C06', '#E85D04'], bg: '#370617' },
-  // Cool Mint
-  { colors: ['#64DFDF', '#72EFDD', '#80FFDB', '#5EEAD4'], bg: '#0D3B3B' },
-  // Velvet Rose
-  { colors: ['#9D174D', '#BE185D', '#DB2777', '#EC4899'], bg: '#1C0A14' },
-  // Electric Blue
-  { colors: ['#0EA5E9', '#38BDF8', '#7DD3FC', '#E0F2FE'], bg: '#0C1929' },
-  // Jungle Fever
-  { colors: ['#84CC16', '#A3E635', '#BEF264', '#ECFCCB'], bg: '#1A2E05' },
+  // Victoria Falls Mist
+  { colors: ['#2d8a4e', '#4ecdc4', '#a8e6cf', '#e8f4f8'], bg: '#0a1f12' },
+  // Copperbelt Sunset
+  { colors: ['#d4760a', '#e8a817', '#ff6b35', '#ffd166'], bg: '#1a0f05' },
+  // Chitenge Bold
+  { colors: ['#c45e0a', '#e8a817', '#2d8a4e', '#d4760a'], bg: '#120a04' },
+  // Kariba Twilight
+  { colors: ['#1a472a', '#2d8a4e', '#4ea8de', '#e8a817'], bg: '#060f0a' },
+  // Nkhwazi Spirit
+  { colors: ['#d4760a', '#1a472a', '#c45e0a', '#2d8a4e'], bg: '#0c0805' },
+  // Zambezi Flow
+  { colors: ['#0ea5e9', '#2d8a4e', '#34d399', '#a78bfa'], bg: '#040d14' },
+  // Tribal Fire
+  { colors: ['#ef4444', '#d4760a', '#e8a817', '#ff6b35'], bg: '#1a0808' },
+  // Luangwa Valley
+  { colors: ['#8b5e3c', '#d4760a', '#2d8a4e', '#e8a817'], bg: '#0f0a06' },
+  // Night Drums
+  { colors: ['#c45e0a', '#ef4444', '#e8a817', '#d4760a'], bg: '#0d0604' },
+  // Emerald Mine
+  { colors: ['#10b981', '#34d399', '#6ee7b7', '#a7f3d0'], bg: '#041a10' },
+  // African Violet
+  { colors: ['#8b5cf6', '#a78bfa', '#c4b5fd', '#d4760a'], bg: '#0f0520' },
+  // Sunrise Lusaka
+  { colors: ['#f59e0b', '#d4760a', '#ef4444', '#fbbf24'], bg: '#1a1005' },
+  // Baobab Bark
+  { colors: ['#78350f', '#92400e', '#b45309', '#d4760a'], bg: '#0a0604' },
+  // Lake Bangweulu
+  { colors: ['#0284c7', '#0ea5e9', '#38bdf8', '#2d8a4e'], bg: '#030d16' },
+  // Copper & Green
+  { colors: ['#d4760a', '#2d8a4e', '#e8a817', '#1a472a'], bg: '#0a0d08' },
 ];
 
 type PatternType = 'aurora' | 'mesh' | 'orbs' | 'rays' | 'waves' | 'geometric' | 'nebula' | 'gradient' | 'rings' | 'crystal';

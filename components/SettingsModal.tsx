@@ -64,7 +64,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                     {/* User Profile Section */}
                     <div className="bg-zinc-50 dark:bg-zinc-800/50 rounded-xl p-6">
                         <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-lg overflow-hidden">
+                            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-muzzie-copper to-muzzie-green flex items-center justify-center text-2xl font-bold text-white shadow-lg overflow-hidden">
                                 {user.avatar_url ? (
                                     <img src={user.avatar_url} alt={user.username} className="w-full h-full object-cover" />
                                 ) : (
@@ -83,7 +83,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                                         onClose();
                                         setIsEditProfileOpen(true);
                                     }}
-                                    className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
+                                    className="flex items-center gap-2 px-4 py-2 bg-muzzie-green text-white rounded-lg text-sm font-medium hover:bg-muzzie-green/80 transition-colors"
                                 >
                                     <Edit3 size={16} />
                                     {t('editProfile')}
@@ -164,7 +164,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                                 <select
                                     value={language}
                                     onChange={(e) => setLanguage(e.target.value as 'en' | 'zh' | 'ja' | 'ko')}
-                                    className="w-full appearance-none py-3 px-4 pr-10 rounded-lg border-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium transition-colors hover:border-zinc-400 dark:hover:border-zinc-600 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-500 cursor-pointer"
+                                    className="w-full appearance-none py-3 px-4 pr-10 rounded-lg border-2 border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-800 text-zinc-900 dark:text-white font-medium transition-colors hover:border-zinc-400 dark:hover:border-zinc-600 focus:outline-none focus:border-muzzie-copper dark:focus:border-muzzie-copper cursor-pointer"
                                 >
                                     <option value="en">{t('english')}</option>
                                     <option value="zh">{t('chinese')}</option>
@@ -190,7 +190,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                                 <button
                                     onClick={theme === 'dark' ? onToggleTheme : undefined}
                                     className={`flex-1 py-3 px-4 rounded-lg border-2 font-medium transition-colors ${theme === 'light'
-                                            ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                                            ? 'border-muzzie-copper bg-muzzie-copper/10 text-muzzie-copper'
                                             : 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600'
                                         }`}
                                 >
@@ -199,7 +199,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                                 <button
                                     onClick={theme === 'light' ? onToggleTheme : undefined}
                                     className={`flex-1 py-3 px-4 rounded-lg border-2 font-medium transition-colors ${theme === 'dark'
-                                            ? 'border-indigo-500 bg-indigo-950 text-indigo-300'
+                                            ? 'border-muzzie-copper bg-muzzie-green/30 text-muzzie-gold'
                                             : 'border-zinc-300 dark:border-zinc-700 hover:border-zinc-400 dark:hover:border-zinc-600'
                                         }`}
                                 >
@@ -217,7 +217,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                         </div>
                         <div className="pl-7 space-y-3 text-sm text-zinc-600 dark:text-zinc-400">
                             <p>{t('version')} 2.0.0</p>
-                            <p>ACE-Step UI - {t('localAIMusicGenerator')}</p>
+                            <p>Muzzie - {t('localAIMusicGenerator')}</p>
                             <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-2">
                                 {t('poweredBy')}
                             </p>
@@ -240,7 +240,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({ isOpen, onClose, t
                                             href="https://github.com/fspecii/ace-step-ui"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="inline-flex items-center gap-2 px-4 py-2 bg-zinc-800 dark:bg-zinc-700 text-white rounded-lg text-sm font-medium hover:bg-zinc-700 dark:hover:bg-zinc-600 transition-colors"
+                                            className="inline-flex items-center gap-2 px-4 py-2 bg-muzzie-green text-white rounded-lg text-sm font-medium hover:bg-muzzie-green/80 transition-colors"
                                         >
                                             <Github size={16} />
                                             GitHub Repo

@@ -441,22 +441,22 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                             </div>
                                             {isCurrentlyPlaying && (
                                                 <div className="absolute bottom-2 left-2 flex items-center gap-1">
-                                                    <span className="w-1 h-3 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
-                                                    <span className="w-1 h-4 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
-                                                    <span className="w-1 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
-                                                    <span className="w-1 h-5 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '450ms' }} />
+                                                    <span className="w-1 h-3 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
+                                                    <span className="w-1 h-4 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                                                    <span className="w-1 h-2 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                                                    <span className="w-1 h-5 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '450ms' }} />
                                                 </div>
                                             )}
                                         </div>
                                         <div className="flex items-start justify-between gap-2">
                                             <div className="flex-1 min-w-0">
-                                                <h3 className={`font-semibold truncate mb-1 text-sm md:text-base ${isCurrentSong ? 'text-pink-500' : 'text-zinc-900 dark:text-white'}`}>{song.title}</h3>
+                                                <h3 className={`font-semibold truncate mb-1 text-sm md:text-base ${isCurrentSong ? 'text-muzzie-copper' : 'text-zinc-900 dark:text-white'}`}>{song.title}</h3>
                                                 <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 truncate mb-2">{song.style}</p>
                                             </div>
                                             {onToggleLike && (
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); onToggleLike(song.id); }}
-                                                    className={`p-1.5 rounded-full transition-colors ${isLiked ? 'text-pink-500' : 'text-zinc-400 hover:text-pink-500'}`}
+                                                    className={`p-1.5 rounded-full transition-colors ${isLiked ? 'text-muzzie-copper' : 'text-zinc-400 hover:text-muzzie-copper'}`}
                                                 >
                                                     <Heart size={16} className={isLiked ? 'fill-current' : ''} />
                                                 </button>
@@ -464,7 +464,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                         </div>
                                         <div className="flex items-center gap-3 text-xs text-zinc-500">
                                             <span className="flex items-center gap-1">
-                                                <Heart size={12} className={isLiked ? 'fill-pink-500 text-pink-500' : ''} /> {song.likeCount || 0}
+                                                <Heart size={12} className={isLiked ? 'fill-muzzie-copper text-muzzie-copper' : ''} /> {song.likeCount || 0}
                                             </span>
                                             <span className="flex items-center gap-1">
                                                 <Eye size={12} /> {song.viewCount || 0}
@@ -515,7 +515,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                 return (
                                     <div
                                         key={song.id}
-                                        className={`group flex items-center gap-3 md:gap-4 p-2 md:p-3 rounded-lg cursor-pointer transition-colors ${isCurrentSong ? 'bg-pink-50 dark:bg-pink-500/10' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900'}`}
+                                        className={`group flex items-center gap-3 md:gap-4 p-2 md:p-3 rounded-lg cursor-pointer transition-colors ${isCurrentSong ? 'bg-muzzie-copper/5 dark:bg-muzzie-copper/10' : 'hover:bg-zinc-100 dark:hover:bg-zinc-900'}`}
                                     >
                                         <div
                                             onClick={() => onPlaySong(song, displaySongs)}
@@ -531,17 +531,17 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                             </div>
                                             {isCurrentlyPlaying && (
                                                 <div className="absolute bottom-1 left-1 flex items-center gap-0.5">
-                                                    <span className="w-0.5 h-2 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
-                                                    <span className="w-0.5 h-3 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
-                                                    <span className="w-0.5 h-1.5 bg-pink-500 rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
+                                                    <span className="w-0.5 h-2 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '0ms' }} />
+                                                    <span className="w-0.5 h-3 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '150ms' }} />
+                                                    <span className="w-0.5 h-1.5 bg-muzzie-copper rounded-full animate-pulse" style={{ animationDelay: '300ms' }} />
                                                 </div>
                                             )}
                                         </div>
                                         <div className="flex-1 min-w-0" onClick={() => onPlaySong(song, displaySongs)}>
-                                            <h3 className={`font-semibold truncate text-sm md:text-base ${isCurrentSong ? 'text-pink-500' : 'text-zinc-900 dark:text-white'}`}>{song.title}</h3>
+                                            <h3 className={`font-semibold truncate text-sm md:text-base ${isCurrentSong ? 'text-muzzie-copper' : 'text-zinc-900 dark:text-white'}`}>{song.title}</h3>
                                             <p className="text-xs md:text-sm text-zinc-500 dark:text-zinc-400 truncate">{song.style}</p>
                                             <div className="flex items-center gap-3 text-xs text-zinc-500 mt-1">
-                                                <span className="flex items-center gap-1"><Heart size={10} className={isLiked ? 'fill-pink-500 text-pink-500' : ''} /> {song.likeCount || 0}</span>
+                                                <span className="flex items-center gap-1"><Heart size={10} className={isLiked ? 'fill-muzzie-copper text-muzzie-copper' : ''} /> {song.likeCount || 0}</span>
                                                 <span className="flex items-center gap-1"><Play size={10} /> {song.viewCount || 0}</span>
                                                 <span>{song.duration}</span>
                                             </div>
@@ -549,7 +549,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                         {onToggleLike && (
                                             <button
                                                 onClick={(e) => { e.stopPropagation(); onToggleLike(song.id); }}
-                                                className={`p-2 rounded-full transition-colors flex-shrink-0 ${isLiked ? 'text-pink-500' : 'text-zinc-400 hover:text-pink-500'}`}
+                                                className={`p-2 rounded-full transition-colors flex-shrink-0 ${isLiked ? 'text-muzzie-copper' : 'text-zinc-400 hover:text-muzzie-copper'}`}
                                             >
                                                 <Heart size={18} className={isLiked ? 'fill-current' : ''} />
                                             </button>
@@ -577,7 +577,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                     onClick={() => onNavigateToPlaylist?.(playlist.id)}
                                     className="group relative flex-shrink-0 w-36 md:w-48 cursor-pointer"
                                 >
-                                    <div className="aspect-square rounded-lg bg-gradient-to-br from-indigo-600 to-purple-700 mb-2 md:mb-3 flex items-center justify-center relative overflow-hidden">
+                                    <div className="aspect-square rounded-lg bg-gradient-to-br from-muzzie-copper to-muzzie-green mb-2 md:mb-3 flex items-center justify-center relative overflow-hidden">
                                         <MusicIcon size={48} className="text-white/30 md:w-16 md:h-16" />
                                         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                                             <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white flex items-center justify-center">
@@ -692,7 +692,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                     onChange={(e) => setEditBio(e.target.value)}
                                     placeholder={t('bioPlaceholder')}
                                     rows={4}
-                                    className="w-full bg-zinc-50 dark:bg-black border border-zinc-300 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-pink-500 dark:focus:border-indigo-500 transition-colors resize-none"
+                                    className="w-full bg-zinc-50 dark:bg-black border border-zinc-300 dark:border-zinc-800 rounded-lg px-3 py-2 text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-600 focus:outline-none focus:border-muzzie-copper transition-colors resize-none"
                                 />
                             </div>
                         </div>

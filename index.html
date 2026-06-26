@@ -3,19 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ACE-Step UI - Local AI Music Generator</title>
+    <title>Muzzie - AI Music Generator</title>
 
     <!-- Primary Meta Tags -->
-    <meta name="title" content="ACE-Step UI - Local AI Music Generator" />
-    <meta name="description" content="Create AI music locally with ACE-Step UI. Free and open source music generation powered by ACE-Step 1.5." />
-    <meta name="keywords" content="AI music generator, ACE-Step, local AI, music generation, text to music, AI song generator" />
+    <meta name="title" content="Muzzie - AI Music Generator" />
+    <meta name="description" content="Create AI music with Muzzie. Free and open source music generation powered by ACE-Step 1.5." />
+    <meta name="keywords" content="AI music generator, Muzzie, local AI, music generation, text to music, AI song generator, Zambian music" />
     <meta name="robots" content="index, follow" />
-    <meta name="author" content="ACE-Step UI" />
+    <meta name="author" content="Muzzie" />
 
     <!-- Additional SEO -->
-    <meta name="theme-color" content="#ec4899" />
-    <meta name="application-name" content="ACE-Step UI" />
-    <meta name="apple-mobile-web-app-title" content="ACE-Step UI" />
+    <meta name="theme-color" content="#1a472a" />
+    <meta name="application-name" content="Muzzie" />
+    <meta name="apple-mobile-web-app-title" content="Muzzie" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -27,13 +27,26 @@
         theme: {
           extend: {
             colors: {
+              muzzie: {
+                DEFAULT: '#0c1a10',
+                sidebar: '#081209',
+                panel: '#0f1f14',
+                card: '#14261a',
+                hover: '#1c3324',
+                border: '#1c3324',
+                green: '#1a472a',
+                copper: '#d4760a',
+                earth: '#8b5e3c',
+                gold: '#e8a817',
+                terracotta: '#c45e0a',
+              },
               suno: {
-                DEFAULT: '#09090b',
-                sidebar: '#000000',
-                panel: '#121214',
-                card: '#18181b',
-                hover: '#27272a',
-                border: '#27272a',
+                DEFAULT: '#0c1a10',
+                sidebar: '#081209',
+                panel: '#0f1f14',
+                card: '#14261a',
+                hover: '#1c3324',
+                border: '#1c3324',
               }
             },
             fontFamily: {
@@ -102,7 +115,7 @@
       }
 
       .gradient-text {
-        background: linear-gradient(to right, #f472b6, #a78bfa, #60a5fa);
+        background: linear-gradient(to right, #d4760a, #e8a817, #2d8a4e);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
       }
@@ -259,7 +272,7 @@
 </script>
 <link rel="stylesheet" href="/index.css">
 </head>
-  <body class="bg-suno text-zinc-900 dark:text-white overflow-hidden transition-colors duration-300">
+  <body class="bg-muzzie text-zinc-900 dark:text-white overflow-hidden transition-colors duration-300">
     <div id="root"></div>
   <script type="module" src="/index.tsx"></script>
 </body>
