@@ -1389,7 +1389,7 @@ function AppContent() {
 
   // Show auth page when not authenticated (bypasses after splash/form)
   if (!authLoading && !isAuthenticated) {
-    return <AuthPage onAuthenticated={() => setupUser('MuzzieUser')} />;
+    return <AuthPage onAuthenticated={async (name: string) => { await setupUser(name); }} />;
   }
 
   return (

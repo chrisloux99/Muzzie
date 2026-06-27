@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Music2, Sparkles, ArrowRight, Loader2 } from 'lucide-react';
 
 interface AuthPageProps {
-  onAuthenticated: () => void;
+  onAuthenticated: (username: string) => Promise<void>;
 }
 
 export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
@@ -15,11 +15,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
       if (phase === 'splash') {
         setPhase('form');
       }
-    }, 1800);
+    }, 1200);
     return () => clearTimeout(timer);
   }, [phase]);
 
-  const handleContinue = (e?: React.FormEvent) => {
+  const handleContinue = async (e?: React.FormEvent) => {
     e?.preventDefault();
     setError('');
 
@@ -34,7 +34,13 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
     }
 
     setPhase('loading');
-    setTimeout(() => onAuthenticated(), 600);
+    try {
+      await onAuthenticated(name);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to connect to server';
+      setError(message);
+      setPhase('form');
+    }
   };
 
   return (

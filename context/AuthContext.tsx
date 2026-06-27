@@ -38,28 +38,15 @@ export function AuthProvider({ children }: { children: ReactNode }): React.React
       } catch (error: unknown) {
         const err = error as { message?: string };
         if (err.message?.startsWith('404:')) {
-          // No user exists yet - auto-create default user
-          console.log('No user in database, auto-creating default user...');
-          try {
-            const { user: userData, token: newToken } = await authApi.setup('MuzzieUser');
-            setUser(userData);
-            setToken(newToken);
-            localStorage.setItem(TOKEN_KEY, newToken);
-            localStorage.setItem(USER_KEY, JSON.stringify(userData));
-          } catch (setupErr) {
-            console.error('Failed to auto-create user:', setupErr);
-            setToken(null);
-            setUser(null);
-            localStorage.removeItem(TOKEN_KEY);
-            localStorage.removeItem(USER_KEY);
-          }
+          // No user exists yet - AuthPage will handle creation
+          console.log('No user in database, waiting for auth page...');
         } else {
           console.warn('Auto-login failed:', error);
-          setToken(null);
-          setUser(null);
-          localStorage.removeItem(TOKEN_KEY);
-          localStorage.removeItem(USER_KEY);
         }
+        setToken(null);
+        setUser(null);
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
       } finally {
         setIsLoading(false);
       }

@@ -1,37 +1,152 @@
-import Database from 'better-sqlite3';
+import initSqlJs, { Database as SqlJsDatabase } from 'sql.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { randomUUID } from 'crypto';
 import { config } from '../config/index.js';
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Ensure data directory exists
 const dataDir = path.dirname(config.database.path);
-import { mkdirSync } from 'fs';
 try {
   mkdirSync(dataDir, { recursive: true });
 } catch {
   // Directory already exists
 }
 
-const dbInstance = new Database(config.database.path);
-dbInstance.pragma('journal_mode = WAL');
-dbInstance.pragma('foreign_keys = ON');
-dbInstance.pragma('busy_timeout = 5000');
+// Load existing database or create new one
+function loadDbData(): Uint8Array | undefined {
+  if (existsSync(config.database.path)) {
+    return new Uint8Array(readFileSync(config.database.path));
+  }
+  return undefined;
+}
 
-export { dbInstance as db };
+// Save database to disk
+function saveDb(db: SqlJsDatabase) {
+  const data = db.export();
+  writeFileSync(config.database.path, Buffer.from(data));
+}
+
+// Initialize sql.js and database
+const SQL = await initSqlJs();
+const dbInstance = new SQL.Database(loadDbData());
+
+// Set pragmas
+dbInstance.run('PRAGMA journal_mode = WAL');
+dbInstance.run('PRAGMA foreign_keys = ON');
+dbInstance.run('PRAGMA busy_timeout = 5000');
+
+// Auto-save on exit
+process.on('exit', () => {
+  try { saveDb(dbInstance); } catch {}
+});
+process.on('SIGINT', () => { saveDb(dbInstance); process.exit(0); });
+process.on('SIGTERM', () => { saveDb(dbInstance); process.exit(0); });
+
+// --- better-sqlite3 compatible wrapper ---
+
+interface StatementResult {
+  columns: string[];
+  values: any[][];
+}
+
+class WrappedStatement {
+  private stmt: any;
+  private db: SqlJsDatabase;
+
+  constructor(db: SqlJsDatabase, sql: string) {
+    this.db = db;
+    this.stmt = db.prepare(sql);
+  }
+
+  all(...params: unknown[]): any[] {
+    this.stmt.bind(params.length > 0 ? params : undefined);
+    const rows: any[] = [];
+    while (this.stmt.step()) {
+      rows.push(this.stmt.getAsObject());
+    }
+    this.stmt.reset();
+    return rows;
+  }
+
+  run(...params: unknown[]): { changes: number } {
+    if (params.length > 0) {
+      this.stmt.bind(params);
+    }
+    this.stmt.step();
+    this.stmt.reset();
+    return { changes: this.db.getRowsModified() };
+  }
+
+  get(...params: unknown[]): any {
+    if (params.length > 0) {
+      this.stmt.bind(params);
+    }
+    if (this.stmt.step()) {
+      const row = this.stmt.getAsObject();
+      this.stmt.reset();
+      return row;
+    }
+    this.stmt.reset();
+    return undefined;
+  }
+}
+
+// Wrapped DB with better-sqlite3 compatible API
+const wrappedDb = {
+  prepare(sql: string): WrappedStatement {
+    return new WrappedStatement(dbInstance, sql);
+  },
+
+  exec(sql: string): void {
+    dbInstance.run(sql);
+  },
+
+  transaction<T extends (...args: any[]) => any>(fn: T): T {
+    return ((...args: any[]) => {
+      dbInstance.run('BEGIN IMMEDIATE');
+      try {
+        const result = fn(...args);
+        dbInstance.run('COMMIT');
+        // Save after each transaction
+        saveDb(dbInstance);
+        return result;
+      } catch (err) {
+        dbInstance.run('ROLLBACK');
+        throw err;
+      }
+    }) as T;
+  },
+
+  pragma(pragmaStr: string): void {
+    dbInstance.run(`PRAGMA ${pragmaStr}`);
+  },
+
+  close(): void {
+    saveDb(dbInstance);
+    dbInstance.close();
+  },
+
+  // Expose raw sql.js db for advanced usage
+  _raw: dbInstance,
+};
+
+export { wrappedDb as db };
+
+// Periodic save (every 30 seconds)
+setInterval(() => {
+  try { saveDb(dbInstance); } catch {}
+}, 30000);
 
 // Convert parameters to SQLite-compatible types
 function sanitizeParams(params?: unknown[]): unknown[] | undefined {
   if (!params) return params;
   return params.map(p => {
-    // Convert undefined to null
     if (p === undefined) return null;
-    // Convert boolean to integer (SQLite stores booleans as 0/1)
     if (typeof p === 'boolean') return p ? 1 : 0;
-    // Convert arrays and objects to JSON strings
     if (Array.isArray(p) || (typeof p === 'object' && p !== null)) {
       return JSON.stringify(p);
     }
@@ -39,25 +154,19 @@ function sanitizeParams(params?: unknown[]): unknown[] | undefined {
   });
 }
 
-// Query result type - use 'any' for rows to avoid strict typing issues
 interface QueryResult {
   rows: any[];
   rowCount: number;
 }
 
-// Convert SQL and execute
-function executeQuery(sql: string, params?: unknown[], dbRef: Database.Database = dbInstance): QueryResult {
-  // Sanitize parameters for SQLite
+function executeQuery(sql: string, params?: unknown[], dbRef: typeof wrappedDb = wrappedDb): QueryResult {
   const sanitizedParams = sanitizeParams(params);
 
-  // Convert PostgreSQL $1, $2 placeholders to SQLite ?
   let convertedSql = sql;
   if (sanitizedParams && sanitizedParams.length > 0) {
-    // Replace $N with ?
     convertedSql = sql.replace(/\$(\d+)/g, '?');
   }
 
-  // Handle common PostgreSQL -> SQLite conversions
   convertedSql = convertedSql
     .replace(/ILIKE/gi, 'LIKE')
     .replace(/CURRENT_TIMESTAMP/gi, "datetime('now')")
@@ -72,12 +181,9 @@ function executeQuery(sql: string, params?: unknown[], dbRef: Database.Database 
   if (insertMatch) {
     const tableName = insertMatch[1];
     const columns = insertMatch[2].split(',').map(c => c.trim().toLowerCase());
-
-    // Tables that need auto-generated IDs
     const tablesNeedingId = ['users', 'songs', 'playlists', 'generation_jobs', 'comments', 'reference_tracks', 'contact_submissions'];
 
     if (tablesNeedingId.includes(tableName.toLowerCase()) && !columns.includes('id')) {
-      // Add id to the INSERT
       const newId = randomUUID();
       const updatedColumns = 'id, ' + insertMatch[2];
       const valuesMatch = convertedSql.match(/VALUES\s*\(([^)]+)\)/i);
@@ -90,7 +196,6 @@ function executeQuery(sql: string, params?: unknown[], dbRef: Database.Database 
   }
 
   try {
-    // Determine if it's a SELECT/returning query
     const isSelect = /^\s*(SELECT|RETURNING)/i.test(convertedSql) ||
                      convertedSql.includes('RETURNING');
 
@@ -111,53 +216,46 @@ function executeQuery(sql: string, params?: unknown[], dbRef: Database.Database 
   }
 }
 
-// Client-like interface for transaction support
 class SqliteClient {
   private inTransaction = false;
 
   async query(sql: string, params?: unknown[]): Promise<QueryResult> {
-    return executeQuery(sql, params, dbInstance);
+    return executeQuery(sql, params, wrappedDb);
   }
 
   release() {
-    // No-op for SQLite - connection doesn't need to be released
     if (this.inTransaction) {
-      // If released while in transaction, rollback
       try {
-        dbInstance.exec('ROLLBACK');
-      } catch {
-        // Ignore if no transaction
-      }
+        wrappedDb.exec('ROLLBACK');
+      } catch {}
       this.inTransaction = false;
     }
   }
 }
 
-// Helper for compatibility with existing code that expects pool-like interface
 export const pool = {
   query: async (sql: string, params?: unknown[]): Promise<QueryResult> => {
     return executeQuery(sql, params);
   },
 
-  // For transaction support (used by like endpoint)
   connect: async () => {
     const client = new SqliteClient();
-    // Override query to handle BEGIN/COMMIT/ROLLBACK
     const originalQuery = client.query.bind(client);
     client.query = async (sql: string, params?: unknown[]) => {
       const upperSql = sql.trim().toUpperCase();
       if (upperSql === 'BEGIN') {
-        dbInstance.exec('BEGIN IMMEDIATE');
+        wrappedDb.exec('BEGIN IMMEDIATE');
         (client as any).inTransaction = true;
         return { rows: [], rowCount: 0 };
       }
       if (upperSql === 'COMMIT') {
-        dbInstance.exec('COMMIT');
+        wrappedDb.exec('COMMIT');
         (client as any).inTransaction = false;
+        saveDb(dbInstance);
         return { rows: [], rowCount: 0 };
       }
       if (upperSql === 'ROLLBACK') {
-        dbInstance.exec('ROLLBACK');
+        wrappedDb.exec('ROLLBACK');
         (client as any).inTransaction = false;
         return { rows: [], rowCount: 0 };
       }
@@ -167,6 +265,6 @@ export const pool = {
   },
 
   end: async () => {
-    dbInstance.close();
+    wrappedDb.close();
   }
 };
