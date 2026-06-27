@@ -1197,7 +1197,7 @@ function AppContent() {
 
   const handleNavigateToNft = (id: string) => {
     setViewingNftCollectionId(id);
-    window.history.pushState({}, '', /nft/);
+    window.history.pushState({}, '', `/nft/${id}`);
   };
 
   const handleBackFromMarketplace = () => {
@@ -1212,53 +1212,6 @@ function AppContent() {
   };
 
   const handleBackFromEarnings = () => {
-    setCurrentView('create');
-    window.history.pushState({}, '', '/');
-  };
-
-  const handleMintNft = (song: Song) => {
-    setSongForNft(song);
-    setShowMintNftModal(true);
-  };
-
-  const handleBackFromWallet = () => {
-    setCurrentView('create');
-    window.history.pushState({}, '', '/');
-  };
-
-
-  const handleNavigateToMarketplace = () => {
-    setCurrentView('marketplace');
-    window.history.pushState({}, '', '/marketplace');
-  };
-
-  const handleNavigateToNft = (id: string) => {
-    setViewingNftCollectionId(id);
-    window.history.pushState({}, '', /nft/);
-  };
-
-  const handleBackFromMarketplace = () => {
-    setViewingNftCollectionId(null);
-    setCurrentView('marketplace');
-    window.history.pushState({}, '', '/marketplace');
-  };
-
-  const handleNavigateToEarnings = () => {
-    setCurrentView('earnings');
-    window.history.pushState({}, '', '/earnings');
-  };
-
-  const handleBackFromEarnings = () => {
-    setCurrentView('create');
-    window.history.pushState({}, '', '/');
-  };
-
-  const handleMintNft = (song: Song) => {
-    setSongForNft(song);
-    setShowMintNftModal(true);
-  };
-
-  const handleBackFromWallet = () => {
     setCurrentView('create');
     window.history.pushState({}, '', '/');
   };
@@ -1663,7 +1616,7 @@ function AppContent() {
               setPendingPlaySong(null);
               playSong(song);
             }
-          }
+          }}
         />
       )}
     </div>
