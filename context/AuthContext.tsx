@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
-import { authApi, User } from '../services/api';
+import { User } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
@@ -17,63 +17,54 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const TOKEN_KEY = 'muzzie_token';
 const USER_KEY = 'muzzie_user';
 
+function generateId(): string {
+  return 'u_' + Math.random().toString(36).slice(2, 10) + Date.now().toString(36);
+}
+
 export function AuthProvider({ children }: { children: ReactNode }): React.ReactElement {
-  // Start with null - we'll auto-login from database on mount
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const isAuthenticated = !!user && !!token;
 
-  // Auto-login on mount: Try to get existing user from database
+  // Auto-login from localStorage
   useEffect(() => {
-    async function initAuth(): Promise<void> {
-      try {
-        // First, try auto-login from database (for local single-user app)
-        const { user: userData, token: newToken } = await authApi.auto();
-        setUser(userData);
-        setToken(newToken);
-        localStorage.setItem(TOKEN_KEY, newToken);
-        localStorage.setItem(USER_KEY, JSON.stringify(userData));
-      } catch (error: unknown) {
-        const err = error as { message?: string };
-        if (err.message?.startsWith('404:')) {
-          // No user exists yet - AuthPage will handle creation
-          console.log('No user in database, waiting for auth page...');
-        } else {
-          console.warn('Auto-login failed:', error);
-        }
-        setToken(null);
-        setUser(null);
-        localStorage.removeItem(TOKEN_KEY);
-        localStorage.removeItem(USER_KEY);
-      } finally {
-        setIsLoading(false);
+    try {
+      const storedUser = localStorage.getItem(USER_KEY);
+      const storedToken = localStorage.getItem(TOKEN_KEY);
+      if (storedUser && storedToken) {
+        setUser(JSON.parse(storedUser));
+        setToken(storedToken);
       }
+    } catch {
+      localStorage.removeItem(USER_KEY);
+      localStorage.removeItem(TOKEN_KEY);
+    } finally {
+      setIsLoading(false);
     }
-
-    initAuth();
   }, []);
 
   const setupUser = useCallback(async (username: string): Promise<void> => {
-    const { user: userData, token: newToken } = await authApi.setup(username);
-    setUser(userData);
-    setToken(newToken);
-    localStorage.setItem(TOKEN_KEY, newToken);
-    localStorage.setItem(USER_KEY, JSON.stringify(userData));
+    const localUser: User = {
+      id: generateId(),
+      username,
+    };
+    const localToken = 'local_' + generateId();
+    setUser(localUser);
+    setToken(localToken);
+    localStorage.setItem(USER_KEY, JSON.stringify(localUser));
+    localStorage.setItem(TOKEN_KEY, localToken);
   }, []);
 
   const updateUsername = useCallback(async (username: string): Promise<void> => {
-    if (!token) throw new Error('Not authenticated');
-    const { user: userData, token: newToken } = await authApi.updateUsername(username, token);
-    setUser(userData);
-    setToken(newToken);
-    localStorage.setItem(TOKEN_KEY, newToken);
-    localStorage.setItem(USER_KEY, JSON.stringify(userData));
-  }, [token]);
+    if (!user) return;
+    const updated = { ...user, username };
+    setUser(updated);
+    localStorage.setItem(USER_KEY, JSON.stringify(updated));
+  }, [user]);
 
   const logout = useCallback((): void => {
-    authApi.logout().catch(() => {});
     setUser(null);
     setToken(null);
     localStorage.removeItem(TOKEN_KEY);
@@ -81,15 +72,8 @@ export function AuthProvider({ children }: { children: ReactNode }): React.React
   }, []);
 
   const refreshUser = useCallback(async (): Promise<void> => {
-    if (!token) return;
-    try {
-      const { user: userData } = await authApi.me(token);
-      setUser(userData);
-      localStorage.setItem(USER_KEY, JSON.stringify(userData));
-    } catch (error) {
-      console.error('Failed to refresh user:', error);
-    }
-  }, [token]);
+    // no-op for local auth
+  }, []);
 
   const value: AuthContextType = {
     user,
