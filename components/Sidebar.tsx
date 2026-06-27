@@ -1,5 +1,5 @@
 import React from 'react';
-import { Library, Disc, Search, LogIn, LogOut, Sun, Moon, GraduationCap, Newspaper } from 'lucide-react';
+import { Library, Disc, Search, LogIn, LogOut, Sun, Moon, GraduationCap, Newspaper, Wallet, Store, TrendingUp } from 'lucide-react';
 import { View } from '../types';
 import { useI18n } from '../context/I18nContext';
 
@@ -119,6 +119,27 @@ export const Sidebar: React.FC<SidebarProps> = ({
           isExpanded={isOpen}
         />
 
+        <NavItem
+          icon={<Wallet size={20} />}
+          label="Wallet"
+          active={currentView === 'wallet'}
+          onClick={() => onNavigate('wallet')}
+          isExpanded={isOpen}
+        />
+        <NavItem
+          icon={<Store size={20} />}
+          label="NFTs"
+          active={currentView === 'marketplace'}
+          onClick={() => onNavigate('marketplace')}
+          isExpanded={isOpen}
+        />
+        <NavItem
+          icon={<TrendingUp size={20} />}
+          label="Earnings"
+          active={currentView === 'earnings'}
+          onClick={() => onNavigate('earnings')}
+          isExpanded={isOpen}
+        />
         <div className="mt-auto flex flex-col gap-2">
           {/* Theme Toggle */}
           <button

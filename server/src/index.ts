@@ -25,6 +25,11 @@ import contactRoutes from './routes/contact.js';
 import referenceTrackRoutes from './routes/referenceTrack.js';
 import loraRoutes from './routes/lora.js';
 import trainingRoutes from './routes/training.js';
+import walletRoutes from './routes/wallet.js';
+import subscriptionRoutes from './routes/subscriptions.js';
+import streamingRoutes from './routes/streaming.js';
+import nftRoutes from './routes/nft.js';
+import earningsRoutes from './routes/earnings.js';
 import { pool } from './db/pool.js';
 import './db/migrate.js';
 
@@ -407,6 +412,11 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/reference-tracks', referenceTrackRoutes);
 app.use('/api/lora', loraRoutes);
 app.use('/api/training', trainingRoutes);
+app.use('/api/wallet', walletRoutes);
+app.use('/api/subscriptions', subscriptionRoutes);
+app.use('/api/streaming', streamingRoutes);
+app.use('/api/nft', nftRoutes);
+app.use('/api/earnings', earningsRoutes);
 
 // Error handler
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {

@@ -12,7 +12,7 @@ import { UserProfile } from './components/UserProfile';
 import { SettingsModal } from './components/SettingsModal';
 import { SongProfile } from './components/SongProfile';
 import { Song, GenerationParams, View, Playlist } from './types';
-import { generateApi, songsApi, playlistsApi, getAudioUrl } from './services/api';
+import { generateApi, songsApi, playlistsApi, getAudioUrl, streamingApi } from './services/api';
 import { useAuth } from './context/AuthContext';
 import { useResponsive } from './context/ResponsiveContext';
 import { I18nProvider, useI18n } from './context/I18nContext';
@@ -24,6 +24,12 @@ import { TrainingPanel } from './components/TrainingPanel';
 import { NewsPage } from './components/NewsPage';
 import { ConfirmDialog } from './components/ConfirmDialog';
 import { AuthPage } from './components/AuthPage';
+import { WalletPanel } from './components/WalletPanel';
+import { SubscriptionBanner } from './components/SubscriptionBanner';
+import { NFTMarketplace } from './components/NFTMarketplace';
+import { NFTDetail } from './components/NFTDetail';
+import { CreatorDashboard } from './components/CreatorDashboard';
+import { MintNFTModal } from './components/MintNFTModal';
 
 
 function AppContent() {
@@ -95,6 +101,11 @@ function AppContent() {
 
   // Settings Modal
   const [showSettingsModal, setShowSettingsModal] = useState(false);
+  const [showSubscriptionBanner, setShowSubscriptionBanner] = useState(false);
+  const [viewingNftCollectionId, setViewingNftCollectionId] = useState<string | null>(null);
+  const [showMintNftModal, setShowMintNftModal] = useState(false);
+  const [songForNft, setSongForNft] = useState<Song | null>(null);
+  const [pendingPlaySong, setPendingPlaySong] = useState<Song | null>(null);
 
   // Profile View
   const [viewingUsername, setViewingUsername] = useState<string | null>(null);
@@ -289,6 +300,18 @@ function AppContent() {
         setCurrentView('search');
       } else if (path === '/news') {
         setCurrentView('news');
+      } else if (path === '/wallet') {
+        setCurrentView('wallet');
+      } else if (path === '/marketplace') {
+        setCurrentView('marketplace');
+      } else if (path === '/earnings') {
+        setCurrentView('earnings');
+      } else if (path.startsWith('/nft/')) {
+        const nftId = path.substring(5);
+        if (nftId) {
+          setViewingNftCollectionId(nftId);
+          setCurrentView('marketplace');
+        }
       }
     };
 
@@ -937,7 +960,7 @@ function AppContent() {
     }
   };
 
-  const playSong = (song: Song, list?: Song[]) => {
+  const playSong = async (song: Song, list?: Song[]) => {
     const nextQueue = list && list.length > 0
       ? list
       : (playQueue.length > 0 && playQueue.some(s => s.id === song.id))
@@ -948,6 +971,20 @@ function AppContent() {
     setQueueIndex(nextIndex);
 
     if (currentSong?.id !== song.id) {
+      if (token) {
+        try {
+          const access = await streamingApi.checkAccess(song.id, token);
+          if (access.requiresPayment && !access.hasAccess) {
+            setPendingPlaySong(song);
+            setShowSubscriptionBanner(true);
+            return;
+          }
+          streamingApi.logPlay(song.id, access.quality, token).catch(() => {});
+        } catch {
+          // If access check fails, allow play anyway
+        }
+      }
+
       const updatedSong = { ...song, viewCount: (song.viewCount || 0) + 1 };
       setCurrentSong(updatedSong);
       setSelectedSong(updatedSong);
@@ -1148,6 +1185,84 @@ function AppContent() {
     }
   };
 
+  const handleNavigateToWallet = () => {
+    setCurrentView('wallet');
+    window.history.pushState({}, '', '/wallet');
+  };
+
+  const handleNavigateToMarketplace = () => {
+    setCurrentView('marketplace');
+    window.history.pushState({}, '', '/marketplace');
+  };
+
+  const handleNavigateToNft = (id: string) => {
+    setViewingNftCollectionId(id);
+    window.history.pushState({}, '', /nft/);
+  };
+
+  const handleBackFromMarketplace = () => {
+    setViewingNftCollectionId(null);
+    setCurrentView('marketplace');
+    window.history.pushState({}, '', '/marketplace');
+  };
+
+  const handleNavigateToEarnings = () => {
+    setCurrentView('earnings');
+    window.history.pushState({}, '', '/earnings');
+  };
+
+  const handleBackFromEarnings = () => {
+    setCurrentView('create');
+    window.history.pushState({}, '', '/');
+  };
+
+  const handleMintNft = (song: Song) => {
+    setSongForNft(song);
+    setShowMintNftModal(true);
+  };
+
+  const handleBackFromWallet = () => {
+    setCurrentView('create');
+    window.history.pushState({}, '', '/');
+  };
+
+
+  const handleNavigateToMarketplace = () => {
+    setCurrentView('marketplace');
+    window.history.pushState({}, '', '/marketplace');
+  };
+
+  const handleNavigateToNft = (id: string) => {
+    setViewingNftCollectionId(id);
+    window.history.pushState({}, '', /nft/);
+  };
+
+  const handleBackFromMarketplace = () => {
+    setViewingNftCollectionId(null);
+    setCurrentView('marketplace');
+    window.history.pushState({}, '', '/marketplace');
+  };
+
+  const handleNavigateToEarnings = () => {
+    setCurrentView('earnings');
+    window.history.pushState({}, '', '/earnings');
+  };
+
+  const handleBackFromEarnings = () => {
+    setCurrentView('create');
+    window.history.pushState({}, '', '/');
+  };
+
+  const handleMintNft = (song: Song) => {
+    setSongForNft(song);
+    setShowMintNftModal(true);
+  };
+
+  const handleBackFromWallet = () => {
+    setCurrentView('create');
+    window.history.pushState({}, '', '/');
+  };
+
   const handleNavigateToPlaylist = (playlistId: string) => {
     setViewingPlaylistId(playlistId);
     setCurrentView('playlist');
@@ -1299,7 +1414,19 @@ function AppContent() {
       case 'news':
         return <NewsPage />;
 
+
+      case 'wallet':
+        return <WalletPanel onBack={handleBackFromWallet} />;
       case 'create':
+
+      case 'marketplace':
+        if (viewingNftCollectionId) {
+          return <NFTDetail collectionId={viewingNftCollectionId} onBack={handleBackFromMarketplace} />;
+        }
+        return <NFTMarketplace onBack={() => { setCurrentView('create'); window.history.pushState({}, '', '/'); }} onSelectCollection={handleNavigateToNft} />;
+
+      case 'earnings':
+        return <CreatorDashboard onBack={handleBackFromEarnings} />;
       default:
         return (
           <div className="flex h-full overflow-hidden relative w-full">
@@ -1526,6 +1653,19 @@ function AppContent() {
         onConfirm={() => confirmDialog?.onConfirm()}
         onCancel={() => setConfirmDialog(null)}
       />
+      {showSubscriptionBanner && (
+        <SubscriptionBanner
+          onClose={() => { setShowSubscriptionBanner(false); setPendingPlaySong(null); }}
+          onSubscribed={() => {
+            setShowSubscriptionBanner(false);
+            if (pendingPlaySong) {
+              const song = pendingPlaySong;
+              setPendingPlaySong(null);
+              playSong(song);
+            }
+          }
+        />
+      )}
     </div>
   );
 }

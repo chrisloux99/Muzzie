@@ -570,6 +570,155 @@ export const contactApi = {
     api('/api/contact', { method: 'POST', body: data }),
 };
 
+
+// Subscription API
+export interface SubscriptionTier {
+  name: string;
+  priceMuz: number;
+  quality: string;
+  features: string[];
+}
+
+export interface SubscriptionData {
+  id?: string;
+  tier: string;
+  priceMuz: number;
+  status: string;
+  startedAt?: string;
+  expiresAt?: string;
+  autoRenew?: boolean;
+}
+
+export const subscriptionsApi = {
+  getTiers: (): Promise<{ tiers: Record<string, SubscriptionTier> }> =>
+    api('/api/subscriptions/tiers'),
+
+  subscribe: (tier: string, token: string): Promise<{ subscription: SubscriptionData }> =>
+    api('/api/subscriptions/subscribe', { method: 'POST', body: { tier }, token }),
+
+  getCurrent: (token: string): Promise<{ subscription: SubscriptionData }> =>
+    api('/api/subscriptions/current', { token }),
+
+  cancel: (token: string): Promise<{ success: boolean }> =>
+    api('/api/subscriptions/cancel', { method: 'POST', token }),
+
+  renew: (token: string): Promise<{ success: boolean; expiresAt: string }> =>
+    api('/api/subscriptions/renew', { method: 'POST', token }),
+};
+
+// Streaming API
+export interface StreamAccess {
+  requiresPayment: boolean;
+  hasAccess: boolean;
+  quality: string;
+  tier: string;
+  costs?: Record<string, number>;
+  isOwner: boolean;
+}
+
+export interface QualityInfo {
+  quality: string;
+  cost: number;
+  available: boolean;
+  requiredTier?: string;
+}
+
+export const streamingApi = {
+  checkAccess: (songId: string, token: string): Promise<StreamAccess> =>
+    api(/api/streaming/access/, { token }),
+
+  logPlay: (songId: string, quality: string, token: string): Promise<{ playId: string; quality: string; costPaid: number }> =>
+    api('/api/streaming/play', { method: 'POST', body: { songId, quality }, token }),
+
+  getQualities: (songId: string, token: string): Promise<{ qualities: QualityInfo[]; tier: string; maxQuality: string }> =>
+    api(/api/streaming/quality/, { token }),
+};
+// NFT API
+export interface NFTCollectionData {
+  id: string;
+  song_id: string;
+  creator_id: string;
+  base_token_id: number;
+  max_supply: number;
+  current_supply: number;
+  price_wei: string;
+  royalty_bps: number;
+  metadata_uri: string;
+  status: string;
+  title: string;
+  cover_url: string;
+  style: string;
+  creator_name: string;
+  creator_avatar: string;
+  minted_at: string;
+}
+
+export const nftApi = {
+  mintNFT: (params: { songId: string; maxSupply: number; priceWei: string; royaltyBps?: number }, token: string): Promise<{ collection: any }> =>
+    api('/api/nft/mint', { method: 'POST', body: params, token }),
+
+  getMarketplace: (limit = 20, offset = 0): Promise<{ collections: NFTCollectionData[] }> =>
+    api(/api/nft/marketplace?limit=&offset=),
+
+  getCollection: (id: string): Promise<{ collection: any; owners: any[] }> =>
+    api(/api/nft/),
+
+  buyNFT: (collectionId: string, token: string): Promise<{ ownership: any }> =>
+    api(/api/nft//buy, { method: 'POST', token }),
+
+  getOwned: (token: string): Promise<{ nfts: any[] }> =>
+    api('/api/nft/owned', { token }),
+
+  getCreated: (token: string): Promise<{ collections: any[] }> =>
+    api('/api/nft/created', { token }),
+};
+
+// Earnings API
+export interface EarningsSummary {
+  totalMuz: number;
+  thisMonthMuz: number;
+  bySource: { streams: number; nftSales: number; tips: number };
+}
+
+export const earningsApi = {
+  getSummary: (token: string): Promise<EarningsSummary> =>
+    api('/api/earnings/summary', { token }),
+
+  getHistory: (token: string, limit = 50): Promise<{ earnings: any[] }> =>
+    api(/api/earnings/history?limit=, { token }),
+
+  getStats: (token: string): Promise<{ songs: number; nfts: number; totalPlays: number; totalLikes: number }> =>
+    api('/api/earnings/stats', { token }),
+};
+// Wallet API
+export interface WalletData {
+  stellarPublicKey: string;
+  baseAddress: string;
+  isCustodial: boolean;
+  muzBalance: string;
+  xlmBalance: string;
+}
+
+export const walletApi = {
+  createWallet: (token: string): Promise<{ wallet: { stellarPublicKey: string; baseAddress: string; isCustodial: boolean } }> =>
+    api('/api/wallet/create', { method: 'POST', token }),
+
+  getWallet: (token: string): Promise<{ wallet: WalletData | null }> =>
+    api('/api/wallet', { token }),
+
+  getBalance: (token: string): Promise<{ muzBalance: string; xlmBalance: string }> =>
+    api('/api/wallet/balance', { token }),
+
+  deposit: (amount: string, token: string): Promise<{ txHash: string; amount: string; status: string }> =>
+    api('/api/wallet/deposit', { method: 'POST', body: { amount }, token }),
+
+  withdraw: (toAddress: string, amount: string, token: string): Promise<{ txHash: string; amount: string; status: string }> =>
+    api('/api/wallet/withdraw', { method: 'POST', body: { toAddress, amount }, token }),
+
+  getTransactions: (token: string, limit = 50, offset = 0): Promise<{ transactions: any[] }> =>
+    api(`/api/wallet/transactions?limit=${limit}&offset=${offset}`, { token }),
+};
+
 // Training API (LoRA fine-tuning via Gradio)
 export interface TrainingSample {
   audio: unknown;

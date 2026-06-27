@@ -46,4 +46,24 @@ export const config = {
     secret: process.env.JWT_SECRET || 'ace-step-ui-local-secret',
     expiresIn: '365d', // Long-lived for local app
   },
+
+  // Blockchain
+  blockchain: {
+    stellar: {
+      network: process.env.STELLAR_NETWORK || 'testnet',
+      horizonUrl: process.env.STELLAR_HORIZON_URL || 'https://horizon-testnet.stellar.org',
+      issuerSecret: process.env.MUZ_ISSUER_SECRET || '',
+      distributionSecret: process.env.MUZ_DISTRIBUTION_SECRET || '',
+      muzAssetCode: 'MUZ',
+    },
+    base: {
+      rpcUrl: process.env.BASE_RPC_URL || 'https://sepolia.base.org',
+      nftContractAddress: process.env.NFT_CONTRACT_ADDRESS || '',
+      deployerKey: process.env.BASE_DEPLOYER_KEY || '',
+      chainId: parseInt(process.env.BASE_CHAIN_ID || '84532'),
+    },
+    encryption: {
+      key: process.env.WALLET_ENCRYPTION_KEY || '',
+    },
+  },
 };

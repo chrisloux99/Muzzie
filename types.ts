@@ -152,4 +152,57 @@ export interface UserProfile {
 }
 
 // Simplified views for Muzzie
-export type View = 'create' | 'library' | 'training' | 'profile' | 'song' | 'playlist' | 'search' | 'news';
+
+export interface Wallet {
+  stellarPublicKey: string;
+  baseAddress: string;
+  isCustodial: boolean;
+  muzBalance?: string;
+  xlmBalance?: string;
+}
+
+export interface MUZTransaction {
+  id: string;
+  type: 'purchase' | 'stream_payment' | 'subscription' | 'tip' | 'nft_sale' | 'creator_earning' | 'withdrawal';
+  amount: string;
+  status: 'pending' | 'confirmed' | 'failed';
+  stellarTxHash?: string;
+  createdAt: string;
+}
+
+export interface Subscription {
+  id: string;
+  tier: 'free' | 'pro' | 'creator';
+  priceMuz: number;
+  status: string;
+  expiresAt?: string;
+}
+
+export interface NFTCollection {
+  id: string;
+  songId: string;
+  creatorId: string;
+  baseTokenId: number;
+  maxSupply: number;
+  currentSupply: number;
+  priceWei: string;
+  royaltyBps: number;
+  status: string;
+}
+
+export interface NFTOwnership {
+  id: string;
+  collectionId: string;
+  ownerAddress: string;
+  tokenId: number;
+  txHash: string;
+  purchasedAt: string;
+}
+
+export interface CreatorEarnings {
+  totalMuz: string;
+  bySource: { streams: string; nftSales: string; tips: string };
+  history: Array<{ type: string; amount: string; date: string }>;
+}
+
+export type View = 'create' | 'library' | 'training' | 'profile' | 'song' | 'playlist' | 'search' | 'news' | 'wallet' | 'marketplace' | 'earnings';
