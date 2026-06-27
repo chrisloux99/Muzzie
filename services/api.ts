@@ -1,4 +1,4 @@
-// Use relative URLs so Vite proxy handles them (enables LAN access)
+// Use relative URLs - Vercel rewrites proxy /api/* to the backend server
 const API_BASE = '';
 
 // Resolve audio URL based on storage type
