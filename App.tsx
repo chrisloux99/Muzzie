@@ -23,6 +23,7 @@ import { SearchPage } from './components/SearchPage';
 import { TrainingPanel } from './components/TrainingPanel';
 import { NewsPage } from './components/NewsPage';
 import { ConfirmDialog } from './components/ConfirmDialog';
+import { AuthPage } from './components/AuthPage';
 
 
 function AppContent() {
@@ -1385,6 +1386,11 @@ function AppContent() {
         );
     }
   };
+
+  // Show auth page when not authenticated (bypasses after splash/form)
+  if (!authLoading && !isAuthenticated) {
+    return <AuthPage onAuthenticated={() => setupUser('MuzzieUser')} />;
+  }
 
   return (
     <div className="flex flex-col h-screen bg-white dark:bg-suno-DEFAULT text-zinc-900 dark:text-white font-sans antialiased selection:bg-muzzie-copper/30 transition-colors duration-300">

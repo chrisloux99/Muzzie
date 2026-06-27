@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Song, Playlist } from '../types';
 import { usersApi, getAudioUrl, UserProfile as UserProfileType, songsApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, Play, Pause, Heart, Eye, Users, Music as MusicIcon, ChevronRight, Share2, MoreHorizontal, Edit3, X, Camera, Image as ImageIcon, Upload, Loader2 } from 'lucide-react';
+import { ArrowLeft, Play, Pause, Heart, Eye, Users, Music as MusicIcon, ChevronRight, Share2, MoreHorizontal, Edit3, X, Camera, Image as ImageIcon, Upload, Loader2, Award, Trophy, Crown, Diamond, Medal, Coffee, Star, Music2 } from 'lucide-react';
 import { useI18n } from '../context/I18nContext';
 
 interface UserProfileProps {
@@ -323,24 +323,24 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                                         ? 'from-emerald-300 via-green-400 to-lime-300 text-emerald-950 shadow-[0_0_16px_rgba(34,197,94,0.4)]'
                                                         : 'from-zinc-200 via-zinc-300 to-zinc-200 text-zinc-700 dark:from-zinc-700 dark:via-zinc-600 dark:to-zinc-700 dark:text-zinc-100';
 
-                                                const icon =
+                                                const BadgeIcon =
                                                     badge.id === 'supporter'
-                                                        ? '🏅'
+                                                        ? Award
                                                         : badge.id === 'patron'
-                                                        ? '🏆'
+                                                        ? Trophy
                                                         : badge.id === 'legendary'
-                                                        ? '👑'
+                                                        ? Crown
                                                         : badge.id === 'diamond'
-                                                        ? '💎'
+                                                        ? Diamond
                                                         : badge.id === 'crown'
-                                                        ? '👑'
+                                                        ? Crown
                                                         : badge.id === 'champion'
-                                                        ? '🥇'
+                                                        ? Medal
                                                         : badge.id === 'music'
-                                                        ? '🎵'
+                                                        ? Music2
                                                         : badge.id === 'coffee'
-                                                        ? '☕'
-                                                        : '⭐';
+                                                        ? Coffee
+                                                        : Star;
 
                                                 return (
                                                     <span
@@ -348,7 +348,7 @@ export const UserProfile: React.FC<UserProfileProps> = ({ username, onBack, onPl
                                                         title={badge.description}
                                                         className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold border border-white/40 dark:border-white/10 bg-gradient-to-r ${style} transition-all duration-200 hover:-translate-y-0.5 hover:scale-[1.03] hover:brightness-110`}
                                                     >
-                                                        <span className="text-sm drop-shadow">{icon}</span>
+                                                        <BadgeIcon size={14} className="drop-shadow" />
                                                         {badge.label}
                                                     </span>
                                                 );
