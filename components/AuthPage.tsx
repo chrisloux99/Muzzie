@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Music2, Sparkles, ArrowRight, Loader2 } from 'lucide-react';
+import { Disc3, Music2, Sparkles, ArrowRight, Loader2, Wand2, Headphones } from 'lucide-react';
 
 interface AuthPageProps {
   onAuthenticated: (username: string) => Promise<void>;
@@ -57,10 +57,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
       {phase === 'splash' && (
         <div className="relative z-10 flex flex-col items-center gap-6 animate-in fade-in duration-500">
           <div className="w-24 h-24 rounded-full bg-gradient-to-br from-muzzie-copper to-muzzie-terracotta flex items-center justify-center shadow-2xl shadow-muzzie-copper/30 animate-bounce">
-            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-14 h-14">
-              <circle cx="32" cy="32" r="28" stroke="white" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.4"/>
-              <path d="M24 20v20c0 3.3-3.6 6-8 6s-8-2.7-8-6 3.6-6 8-6c1.5 0 2.9.3 4 .8V16l16-4v18c0 3.3-3.6 6-8 6s-8-2.7-8-6 3.6-6 8-6c1.5 0 2.9.3 4 .8V12" fill="white" opacity="0.95"/>
-            </svg>
+            <Disc3 className="w-14 h-14 text-white" strokeWidth={1.5} />
           </div>
           <h1 className="text-4xl font-bold text-white tracking-tight">Muzzie</h1>
           <p className="text-zinc-400 text-sm tracking-widest uppercase">AI Music Generator</p>
@@ -78,7 +75,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
               {/* Logo */}
               <div className="flex justify-center mb-8">
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-muzzie-copper to-muzzie-terracotta flex items-center justify-center shadow-lg shadow-muzzie-copper/20">
-                  <Music2 className="w-8 h-8 text-white" />
+                  <Headphones className="w-8 h-8 text-white" strokeWidth={1.5} />
                 </div>
               </div>
 
@@ -114,7 +111,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
                   type="submit"
                   className="w-full py-3.5 bg-gradient-to-r from-muzzie-copper to-muzzie-terracotta text-white font-semibold rounded-xl hover:from-muzzie-terracotta hover:to-muzzie-copper transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-2 shadow-lg shadow-muzzie-copper/20"
                 >
-                  <Sparkles size={18} />
+                  <Wand2 size={18} />
                   Get Started
                   <ArrowRight size={18} />
                 </button>
@@ -130,11 +127,11 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onAuthenticated }) => {
           {/* Features hint */}
           <div className="mt-6 flex justify-center gap-6 text-zinc-500 text-xs">
             <span className="flex items-center gap-1.5">
-              <Music2 size={14} className="text-muzzie-copper" />
+              <Wand2 size={14} className="text-muzzie-copper" />
               Text to Music
             </span>
             <span className="flex items-center gap-1.5">
-              <Sparkles size={14} className="text-muzzie-gold" />
+              <Headphones size={14} className="text-muzzie-gold" />
               AI Powered
             </span>
           </div>

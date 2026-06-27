@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>AI Music Generator with Zambian Heritage Aesthetics</strong><br>
-  <em>Seamless integration with <a href="https://github.com/ace-step/ACE-Step-1.5">ACE-Step 1.5</a> - The Open Source AI Music Generation Model</em>
+  <em>Generate professional AI music with a beautiful, Spotify-inspired interface</em>
 </p>
 
 <p align="center">
@@ -22,7 +22,7 @@
   <a href="#-demo">Demo</a> •
   <a href="#-why-muzzie">Why Muzzie</a> •
   <a href="#-features">Features</a> •
-  <a href="#-installation">Installation</a> •
+  <a href="#-quick-start">Quick Start</a> •
   <a href="#-usage">Usage</a> •
   <a href="#-contributing">Contributing</a>
 </p>
@@ -38,7 +38,7 @@
 
 ---
 
-## 🎬 Demo
+## Demo
 
 <p align="center">
   <a href="https://www.youtube.com/watch?v=8zg0Xi36qGc">
@@ -56,12 +56,12 @@
 
 ---
 
-## 🚀 Why ACE-Step UI?
+## Why Muzzie?
 
-**Tired of paying $10+/month for Suno or Udio?** ACE-Step 1.5 is the **open source Suno killer** that runs locally on your own GPU - and ACE-Step UI gives you a **beautiful, professional interface** to harness its full power.
+**Tired of paying $10+/month for Suno or Udio?** Muzzie gives you a **beautiful, professional interface** to generate AI music locally on your own GPU — completely free.
 
-| Feature | Suno/Udio | ACE-Step UI |
-|---------|-----------|-------------|
+| Feature | Suno/Udio | Muzzie |
+|---------|-----------|--------|
 | **Cost** | $10-50/month | **FREE forever** |
 | **Privacy** | Cloud-based | **100% local** |
 | **Ownership** | Licensed | **You own everything** |
@@ -69,19 +69,11 @@
 | **Queue Limits** | Restricted | **Unlimited** |
 | **Commercial Use** | Expensive tiers | **No restrictions** |
 
-### What Makes ACE-Step 1.5 Special?
-
-- **State-of-the-art quality** rivaling commercial services
-- **Full song generation** up to 4+ minutes with vocals
-- **Runs locally** - no internet required after setup
-- **Open source** - inspect, modify, improve
-- **Active development** - constant improvements
-
 ---
 
-## ✨ Features
+## Features
 
-### 🎵 AI Music Generation
+### AI Music Generation
 | Feature | Description |
 |---------|-------------|
 | **Full Song Generation** | Create complete songs with vocals and lyrics up to 4+ minutes |
@@ -92,7 +84,7 @@
 | **AI Enhance** | Enrich genre tags into detailed captions with proper BPM/key/time |
 | **Thinking Mode** | Let AI reason about structure and generate audio codes |
 
-### 🎨 Advanced Parameters
+### Advanced Parameters
 | Feature | Description |
 |---------|-------------|
 | **Reference Audio** | Use any audio file as a style reference |
@@ -101,7 +93,7 @@
 | **Seed Control** | Reproduce exact generations for consistency |
 | **Inference Steps** | Control quality vs speed tradeoff |
 
-### 🎤 Lyrics & Prompts
+### Lyrics & Prompts
 | Feature | Description |
 |---------|-------------|
 | **Lyrics Editor** | Write and format lyrics with structure tags |
@@ -109,7 +101,7 @@
 | **Prompt Templates** | Quick-start with genre presets |
 | **Reuse Prompts** | Clone settings from any previous generation |
 
-### 🎧 Professional Interface
+### Professional Interface
 | Feature | Description |
 |---------|-------------|
 | **Spotify-Inspired UI** | Clean, modern design with dark/light mode |
@@ -119,7 +111,7 @@
 | **Real-time Progress** | Live generation progress with queue position |
 | **LAN Access** | Use from any device on your local network |
 
-### 🛠️ Built-in Tools
+### Built-in Tools
 | Feature | Description |
 |---------|-------------|
 | **Audio Editor** | Trim, fade, and apply effects with AudioMass |
@@ -129,18 +121,18 @@
 
 ---
 
-## 💻 Tech Stack
+## Tech Stack
 
 | Layer | Technologies |
 |-------|-------------|
 | **Frontend** | React 18, TypeScript, TailwindCSS, Vite |
-| **Backend** | Express.js, SQLite, better-sqlite3 |
-| **AI Engine** | [ACE-Step 1.5](https://github.com/ace-step/ACE-Step-1.5) (Gradio API) |
+| **Backend** | Express.js, SQLite |
+| **AI Engine** | ACE-Step 1.5 (Gradio API) |
 | **Audio Tools** | AudioMass, Demucs, FFmpeg |
 
 ---
 
-## 📋 Requirements
+## Requirements
 
 | Requirement | Specification |
 |-------------|---------------|
@@ -149,238 +141,83 @@
 | **NVIDIA GPU** | 4GB+ VRAM (works without LLM), 12GB+ recommended (with LLM) |
 | **CUDA** | 12.8 (for Windows Portable Package) |
 | **FFmpeg** | For audio processing |
-| **uv** | Python package manager (recommended for standard install) |
 
 ---
 
-## ⚡ Quick Start
+## Quick Start
 
-### 🎯 Pinokio - 1-Click Install (Recommended for All Users!)
-
-The easiest way to get ACE-Step UI up and running on **any platform** — no terminal, no manual setup:
-
-<p align="center">
-  <a href="https://beta.pinokio.co/apps/github-com-cocktailpeanut-ace-step-ui-pinokio">
-    <img src="https://img.shields.io/badge/⚡_Install_with_Pinokio-One_Click-ff69b4?style=for-the-badge&labelColor=1a1a1a" alt="Install with Pinokio" height="50">
-  </a>
-</p>
-
-> **[Pinokio](https://pinokio.computer)** handles everything automatically: Python, Node.js, dependencies, model downloads, and launching. Just click install and start making music.
-
----
-
-### 🪟 Windows - One-Click Start (Easiest!)
+### Windows - One-Click Start
 ```batch
-cd ace-step-ui
 start-all.bat
 ```
-**That's it!** This starts everything: API + Backend + Frontend in one command.
+Starts everything: AI engine + backend + frontend in one command.
 
-> **Note:** By default, it looks for ACE-Step in `..\ACE-Step-1.5`.
-> If yours is elsewhere, set `ACESTEP_PATH` first:
-> ```batch
-> set ACESTEP_PATH=C:\path\to\ACE-Step-1.5
-> start-all.bat
-> ```
+### Linux / macOS - One-Click Start
+```bash
+./start-all.sh
+```
 
-### 🪟 Windows - Manual Start
-```batch
-REM 1. Start ACE-Step Gradio (with API endpoints)
+### Manual Start
+
+**1. Start the AI engine:**
+```bash
+# Windows Portable Package
 cd C:\ACE-Step-1.5
 python_embeded\python -m acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
 
-REM 2. Start ACE-Step UI (in another terminal)
-cd ace-step-ui
-start.bat
-```
-
-### Linux / macOS - One-Click Start (Easiest!)
-```bash
-cd ace-step-ui
-./start-all.sh
-```
-**That's it!** This starts everything: Gradio + Backend + Frontend in one command.
-
-> **Note:** By default, it looks for ACE-Step in `../ACE-Step-1.5`.
-> If yours is elsewhere, set `ACESTEP_PATH` first:
-> ```bash
-> export ACESTEP_PATH=/path/to/ACE-Step-1.5
-> ./start-all.sh
-> ```
-> **To stop:** `./stop-all.sh`
-
-### Linux / macOS - Manual Start
-```bash
-# 1. Start ACE-Step Gradio with API (in ACE-Step-1.5 directory)
+# Linux / macOS
 cd /path/to/ACE-Step-1.5
 uv run acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
-
-# 2. Start ACE-Step UI (in another terminal)
-cd ace-step-ui
-./start.sh
 ```
 
-### Windows (Standard Installation)
-```batch
-REM 1. Start ACE-Step Gradio with API (in ACE-Step-1.5 directory)
-cd C:\path\to\ACE-Step-1.5
-uv run acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
-
-REM 2. Start ACE-Step UI (in another terminal)
-cd ace-step-ui
-start.bat
+**2. Start Muzzie:**
+```bash
+npm start
 ```
 
 Open **http://localhost:3000** and start creating!
 
 ---
 
-## 📦 Installation
+## Installation
 
-### 1. Install ACE-Step (The AI Engine)
+### 1. Install the AI Engine
 
-#### 🪟 Windows Portable Package (Recommended for Windows)
+#### Windows Portable Package (Recommended)
 
-**The easiest way to get started on Windows!** This package includes everything pre-configured:
+1. Download [ACE-Step-1.5.7z](https://files.acemusic.ai/acemusic/win/ACE-Step-1.5.7z) (~5GB)
+2. Extract to `C:\ACE-Step-1.5`
+3. Done! Includes Python with all dependencies
 
-1. **Download** [ACE-Step-1.5.7z](https://files.acemusic.ai/acemusic/win/ACE-Step-1.5.7z) (~5GB)
-2. **Extract** to `C:\ACE-Step-1.5` (or your preferred location)
-3. **Done!** The package includes `python_embeded` with all dependencies
-
-✅ **Works with 4GB GPU** - No LLM installation required
-✅ **CUDA 12.8** included
-✅ **Zero setup hassle**
-
-> **Note:** Thinking Mode (LLM features) is automatically disabled on GPUs with <12GB VRAM. You can still enable it manually if you have 12GB+.
+Works with 4GB GPU. CUDA 12.8 included. Zero setup hassle.
 
 #### Standard Installation (All Platforms)
 
 ```bash
-# Clone ACE-Step 1.5 - the open source Suno alternative
 git clone https://github.com/ace-step/ACE-Step-1.5
 cd ACE-Step-1.5
-
-# Create virtual environment and install
 uv venv
 uv pip install -e .
-
-# Models download automatically on first run (~5GB)
-cd ..
 ```
 
-### 2. Install ACE-Step UI (This Repository)
+Models download automatically on first run (~5GB).
 
-#### Linux / macOS
-```bash
-# Clone the UI
-git clone https://github.com/fspecii/ace-step-ui
-cd ace-step-ui
-
-# Run setup script (installs all dependencies)
-./setup.sh
-```
-
-#### Windows
-```batch
-REM Clone the UI
-git clone https://github.com/fspecii/ace-step-ui
-cd ace-step-ui
-
-REM Run setup script (installs all dependencies)
-setup.bat
-```
-
-#### Manual Installation (All Platforms)
+### 2. Install Muzzie
 
 ```bash
-# Install frontend dependencies
+git clone https://github.com/chrisloux99/Muzzie
+cd Muzzie
 npm install
-
-# Install server dependencies
-cd server
-npm install
-cd ..
-
-# Copy environment file
-# Linux/macOS:
+cd server && npm install && cd ..
 cp server/.env.example server/.env
-# Windows:
-copy server\.env.example server\.env
 ```
 
 ---
 
-## 🎮 Usage
-
-### Step 1: Start ACE-Step Gradio Server
-
-**🪟 Windows Portable Package:**
-```batch
-cd C:\ACE-Step-1.5
-python_embeded\python -m acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
-```
-
-**Linux / macOS:**
-```bash
-cd /path/to/ACE-Step-1.5
-uv run acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
-```
-
-**Windows (Standard Installation):**
-```batch
-cd C:\path\to\ACE-Step-1.5
-uv run acestep --port 8001 --enable-api --backend pt --server-name 127.0.0.1
-```
-
-Wait for "API endpoints enabled" before proceeding.
-
-### Step 2: Start ACE-Step UI
-
-**Linux / macOS:**
-```bash
-cd ace-step-ui
-./start.sh
-```
-
-**Windows:**
-```batch
-cd ace-step-ui
-start.bat
-```
-
-### Step 3: Create Music!
-
-| Access | URL |
-|--------|-----|
-| Local | http://localhost:3000 |
-| LAN (other devices) | http://YOUR_IP:3000 |
-
----
-
-## ⚙️ Configuration
-
-Edit `server/.env`:
-
-```env
-# Server
-PORT=3001
-
-# ACE-Step Gradio URL (must match --port used when starting ACE-Step)
-ACESTEP_API_URL=http://localhost:8001
-
-# Database (local-first, no cloud)
-DATABASE_PATH=./data/acestep.db
-
-# Optional: Pexels API for video backgrounds
-PEXELS_API_KEY=your_key_here
-```
-
----
-
-## 🎼 Generation Modes
+## Usage
 
 ### Simple Mode
-Just describe what you want. ACE-Step handles the rest.
+Just describe what you want. The AI handles the rest.
 
 > "An upbeat pop song about summer adventures with catchy hooks"
 
@@ -400,61 +237,44 @@ Full control over every parameter:
 | Mode | What it does | Speed impact |
 |------|-------------|--------------|
 | **AI Enhance OFF** | Sends your style tags directly to the model | Fastest |
-| **AI Enhance ON** | LLM enriches your tags into a detailed caption and generates proper BPM, key, time signature | +10-20s |
+| **AI Enhance ON** | LLM enriches your tags into a detailed caption | +10-20s |
 | **Thinking Mode** | Full LLM reasoning with audio code generation | Slowest, best quality |
 
-> **Tip:** If your genre tags (e.g. "pop, rock") produce ballad-like output, turn on **AI Enhance** for much better genre accuracy. No extra VRAM needed — the LLM runs on CPU with the PT backend.
+---
 
-### Batch Size & Bulk Generation
+## Configuration
 
-| Setting | Description |
-|---------|-------------|
-| **Batch Size** | Number of variations generated per job (1-4). Default is **1** for broad GPU compatibility. Higher values generate more variations but use more VRAM. **8GB GPU users should keep this at 1.** |
-| **Bulk Generate** | Queue multiple independent generation jobs (1-10). Each job runs sequentially, so this is safe for any GPU. |
-| **LM Backend** | Choose between **PT** (~1.6 GB VRAM) and **VLLM** (~9.2 GB VRAM). PT is the default and works on most GPUs. |
+Edit `server/.env`:
 
-> **Tip:** Both batch size and bulk count are remembered in your browser — set them once and they stick for future sessions.
+```env
+PORT=3001
+ACESTEP_API_URL=http://localhost:8001
+DATABASE_PATH=./data/muzzie.db
+PEXELS_API_KEY=your_key_here
+```
 
 ---
 
-## 🔧 Built-in Tools
-
-| Tool | Description |
-|------|-------------|
-| **🎚️ Audio Editor** | Cut, trim, fade, and apply effects |
-| **🎤 Stem Extraction** | Separate vocals, drums, bass, other |
-| **🎬 Video Generator** | Create music videos with stock footage |
-| **🎨 Album Art** | Auto-generated gradient covers |
-
----
-
-## 🐛 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |-------|----------|
-| **ACE-Step not reachable** | Ensure Gradio server is running with `--enable-api` flag (see Usage section) |
-| **CUDA out of memory** | Use `--backend pt` (default), set batch size to **1**, reduce duration, or disable Thinking Mode |
-| **4GB GPU - Out of memory** | Use **PT** backend (default), batch size **1**, and keep **Thinking Mode OFF**. LLM features require 12GB+ |
-| **Genre always sounds like ballad** | Enable **AI Enhance** toggle in the Style section — it enriches your tags with proper metadata |
-| **AttributeError: 'NoneType'** | Update to latest ACE-Step-1.5 (fix merged in PR #109) |
-| **Songs show 0:00 duration** | Install FFmpeg: `sudo apt install ffmpeg` (Linux) or download from [ffmpeg.org](https://ffmpeg.org) (Windows) |
+| **AI engine not reachable** | Ensure it's running with `--enable-api` flag |
+| **CUDA out of memory** | Set batch size to 1, reduce duration, or disable Thinking Mode |
+| **Genre sounds wrong** | Enable AI Enhance for better genre accuracy |
+| **Songs show 0:00 duration** | Install FFmpeg |
 | **LAN access not working** | Check firewall allows ports 3000 and 3001 |
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-**We need your help to make ACE-Step UI even better!**
+We need your help to make Muzzie even better!
 
-This is a community-driven project and contributions are what make open source amazing. Whether you're fixing bugs, adding features, improving documentation, or sharing ideas - every contribution counts!
-
-### Ways to Contribute
-
-- 🐛 **Report bugs** - Found an issue? Open a GitHub issue
-- 💡 **Suggest features** - Have an idea? We'd love to hear it
-- 🔧 **Submit PRs** - Code contributions are always welcome
-- 📖 **Improve docs** - Help others get started
-- ⭐ **Star the repo** - Show your support!
+- Report bugs by opening a GitHub issue
+- Suggest features — we'd love to hear your ideas
+- Submit PRs — code contributions are always welcome
+- Improve docs — help others get started
 
 ### How to Contribute
 
@@ -466,75 +286,34 @@ This is a community-driven project and contributions are what make open source a
 
 ---
 
-## 📣 Stay Connected
+## Stay Connected
 
 <p align="center">
   <a href="https://www.youtube.com/@Ambsd-yy7os">
     <img src="https://img.shields.io/badge/YouTube-Subscribe_for_Tutorials-FF0000?style=for-the-badge&logo=youtube" alt="YouTube">
   </a>
-</p>
-
-<p align="center">
   <a href="https://x.com/AmbsdOP">
     <img src="https://img.shields.io/badge/X_(Twitter)-Follow_for_Updates-1DA1F2?style=for-the-badge&logo=x&logoColor=white" alt="X/Twitter">
   </a>
 </p>
 
-<p align="center">
-  <strong>Subscribe and follow for:</strong><br>
-  🎥 Video tutorials and demos<br>
-  🚀 New feature announcements<br>
-  💡 Tips and tricks<br>
-  🎵 AI music generation news
-</p>
-
 ---
 
-## 💼 Need a Website Like This?
+## Credits
 
-If you like the engineering and design behind ACE-Step UI and want something similar built for your business, the same team offers professional web development services.
-
-**We build:**
-- 🌐 Custom websites & web apps — Next.js, Astro, WordPress, React
-- 🤖 AI integrations & automations — OpenAI, Anthropic, custom LLM workflows
-- 📱 Mobile apps — iOS, Android, React Native
-- 🎨 UI/UX design tailored to your brand
-
-<p align="center">
-  <a href="https://websitefirma.ro">
-    <img src="https://img.shields.io/badge/Get_in_Touch-websitefirma.ro-d4ff00?style=for-the-badge&labelColor=000000" alt="websitefirma.ro">
-  </a>
-</p>
-
-<p align="center">
-  <em>From the makers of ACE-Step UI — we ship production-grade web experiences.</em>
-</p>
-
----
-
-## 🙏 Credits
-
-- **[ACE-Step](https://github.com/ace-step/ACE-Step-1.5)** - The revolutionary open source AI music generation model
+- **[ACE-Step](https://github.com/ace-step/ACE-Step-1.5)** - The open source AI music generation model powering Muzzie
 - **[AudioMass](https://github.com/pkalogiros/AudioMass)** - Web audio editor
 - **[Demucs](https://github.com/facebookresearch/demucs)** - Audio source separation
 - **[Pexels](https://www.pexels.com)** - Stock video backgrounds
 
 ---
 
-## 📄 License
+## License
 
 This project is open source under the [MIT License](LICENSE).
 
 ---
 
 <p align="center">
-  <strong>⭐ If ACE-Step UI helps you create amazing music, please star this repo! ⭐</strong>
-</p>
-
-<p align="center">
-  <em>Made with ❤️ for the open-source AI music community</em>
-</p>
-
-<p align="center">
-  <strong>Stop paying for Suno. Start creating with ACE-Step.</strong>
+  <strong>If Muzzie helps you create amazing music, please star this repo!</strong>
 </p>
