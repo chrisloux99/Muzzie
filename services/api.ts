@@ -625,13 +625,13 @@ export interface QualityInfo {
 
 export const streamingApi = {
   checkAccess: (songId: string, token: string): Promise<StreamAccess> =>
-    api(/api/streaming/access/, { token }),
+    api(`/api/streaming/access/${songId}`, { token }),
 
   logPlay: (songId: string, quality: string, token: string): Promise<{ playId: string; quality: string; costPaid: number }> =>
     api('/api/streaming/play', { method: 'POST', body: { songId, quality }, token }),
 
   getQualities: (songId: string, token: string): Promise<{ qualities: QualityInfo[]; tier: string; maxQuality: string }> =>
-    api(/api/streaming/quality/, { token }),
+    api(`/api/streaming/quality/${songId}`, { token }),
 };
 // NFT API
 export interface NFTCollectionData {
@@ -658,13 +658,13 @@ export const nftApi = {
     api('/api/nft/mint', { method: 'POST', body: params, token }),
 
   getMarketplace: (limit = 20, offset = 0): Promise<{ collections: NFTCollectionData[] }> =>
-    api(/api/nft/marketplace?limit=&offset=),
+    api(`/api/nft/marketplace?limit=${limit}&offset=${offset}`),
 
   getCollection: (id: string): Promise<{ collection: any; owners: any[] }> =>
-    api(/api/nft/),
+    api(`/api/nft/${id}`),
 
   buyNFT: (collectionId: string, token: string): Promise<{ ownership: any }> =>
-    api(/api/nft//buy, { method: 'POST', token }),
+    api(`/api/nft/${collectionId}/buy`, { method: 'POST', token }),
 
   getOwned: (token: string): Promise<{ nfts: any[] }> =>
     api('/api/nft/owned', { token }),
@@ -685,7 +685,7 @@ export const earningsApi = {
     api('/api/earnings/summary', { token }),
 
   getHistory: (token: string, limit = 50): Promise<{ earnings: any[] }> =>
-    api(/api/earnings/history?limit=, { token }),
+    api(`/api/earnings/history?limit=${limit}`, { token }),
 
   getStats: (token: string): Promise<{ songs: number; nfts: number; totalPlays: number; totalLikes: number }> =>
     api('/api/earnings/stats', { token }),
